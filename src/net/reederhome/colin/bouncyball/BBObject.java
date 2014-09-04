@@ -15,4 +15,6 @@ public abstract class BBObject {
 	public abstract void draw(Graphics g);
 	public abstract int width();
 	public abstract int height();
+	public String noCollision() {return "";}
+	public void onCollision(BBObject thing) {}
 }

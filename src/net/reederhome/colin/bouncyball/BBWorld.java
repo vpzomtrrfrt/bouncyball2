@@ -22,6 +22,15 @@ public class BBWorld extends JComponent implements KeyListener {
 	public void updateObjects() {
 		for(int i = 0; i < obj.size(); i++) {
 			obj.get(i).update();
+			if(!obj.get(i).noCollision().contains("me")) {
+				for(int i2 = 0; i2 < obj.size(); i2++) {
+					if(!obj.get(i2).noCollision().contains("you")&&!(i2==i)) {
+						if(obj.get(i).x<obj.get(i2).x+obj.get(i2).width()&&obj.get(i).x+obj.get(i).width()>obj.get(i2).x&&obj.get(i).y<obj.get(i2).y+obj.get(i2).height()&&obj.get(i).y+obj.get(i).height()>obj.get(i2).y) {
+							obj.get(i).onCollision(obj.get(i2));
+						}
+					}
+				}
+			}
 		}
 	}
 
