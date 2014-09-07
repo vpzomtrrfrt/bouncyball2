@@ -16,7 +16,9 @@ public class BouncyBall {
 			classMapping = new HashMap<String,Class>();
 			classMapping.put("ball", BBBall.class);
 			classMapping.put("box", BBBox.class);
+			classMapping.put("woodblock", BBBox.class);
 			classMapping.put("end", BBFinish.class);
+			classMapping.put("done", BBFinish.class);
 		}
 		return classMapping;
 	}
