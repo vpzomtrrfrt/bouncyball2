@@ -27,9 +27,9 @@ public class BBFinish extends BBObject {
 	public String noCollision() {return "you";}
 	
 	public void onCollide(BBObject thing) {
-		System.out.println(thing);
 		if(thing instanceof BBBall) {
 			worldObj.going=false;
+			worldObj.win=0;
 			thing.x=x+width()/2-thing.width()/2;
 			thing.y=y+height()/2-thing.height()/2;
 		}

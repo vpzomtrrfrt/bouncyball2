@@ -16,5 +16,5 @@ public abstract class BBObject {
 	public abstract int width();
 	public abstract int height();
 	public String noCollision() {return "";}
-	public void onCollision(BBObject thing) {}
+	public void onCollide(BBObject thing) {}
 }

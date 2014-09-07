@@ -11,7 +11,7 @@ public class BouncyBall {
 	public static BBWorld world;
 	public static String[] lastArgs;
 	private static HashMap<String,Class> classMapping;
-	public static HashMap<String,Class> getHashMap() {
+	public static HashMap<String,Class> getClassMap() {
 		if(classMapping==null) {
 			classMapping = new HashMap<String,Class>();
 			classMapping.put("ball", BBBall.class);
@@ -22,7 +22,7 @@ public class BouncyBall {
 	}
 	public static BBObject loadLine(String l) {
 		String[] args = l.split(" ");
-		HashMap<String,Class> map = getHashMap();
+		HashMap<String,Class> map = getClassMap();
 		if(map.containsKey(args[0])) {
 			lastArgs=args;
 			try {
@@ -62,5 +62,9 @@ public class BouncyBall {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void nextLevel() {
+		System.exit(0);
 	}
 }

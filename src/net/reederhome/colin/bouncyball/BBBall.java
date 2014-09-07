@@ -12,7 +12,7 @@ public class BBBall extends BBMovingObject implements KeyListener {
 	
 	@Override
 	public void draw(Graphics g) {
-		if(!worldObj.going) {
+		if(!worldObj.going&&worldObj.win==-1) {
 			g.setColor(Color.black);
 			g.drawLine(x+width()/2, y+height()/2, x+width()/2+xv*width(), y+height()/2+yv*height());
 		}
