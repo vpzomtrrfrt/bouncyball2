@@ -88,7 +88,14 @@ public class BouncyBall {
 		try {
 			frame = new JFrame("Bouncy Ball");
 			if(args[0].indexOf(".bbl")>-1) {
-				setupLevel(loadLevel(new FileInputStream(args[0])));				
+				URL url;
+				if(args[0].indexOf("://")>-1) {
+					url = new URL(args[0]);
+				}
+				else {
+					url = new File(args[0]).toURI().toURL();
+				}
+				setupLevel(loadLevel(url.openStream()));				
 			}
 			else {
 				File infofile = new File(args[0]);

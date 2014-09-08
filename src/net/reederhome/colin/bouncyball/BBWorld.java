@@ -95,8 +95,10 @@ public class BBWorld extends JComponent implements KeyListener {
 	}
 
 	public void addObject(BBObject no) {
-		no.worldObj=this;
-		obj.add(no);
+		if(no!=null) {
+			no.worldObj=this;
+			obj.add(no);
+		}
 	}
 
 	@Override
