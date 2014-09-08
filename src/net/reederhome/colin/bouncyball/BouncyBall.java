@@ -7,8 +7,9 @@ import javax.swing.*;
 @SuppressWarnings("rawtypes")
 public class BouncyBall {
 
+	public static String lastLevel;
 	public static JFrame frame;
-	public static BBWorld world;
+	public static BBWorld world = null;
 	public static String[] lastArgs;
 	private static HashMap<String,Class> classMapping;
 	public static HashMap<String,Class> getClassMap() {
@@ -39,25 +40,44 @@ public class BouncyBall {
 	public static BBWorld loadLevel(InputStream is) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		BBWorld tr = null;
+		lastLevel="";
 		try {
 			tr = new BBWorld(br.readLine(), Integer.parseInt(br.readLine()));
+			String n = "\n";
+			lastLevel+=tr.getName();
+			lastLevel+=n+tr.time;
 			String line = null;
 			do {
-				if(line!=null) tr.addObject(loadLine(line));
+				if(line!=null) {
+					lastLevel+=n+line;
+					tr.addObject(loadLine(line));
+				}
 				line = br.readLine();
 			} while(line != null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println(lastLevel);
 		return tr;
 	}
+	
+	public static void setupLevel(BBWorld w) {
+		frame.getContentPane().removeAll();
+		world = w;
+		frame.setTitle(world.getName(true));
+		frame.addKeyListener(world);
+		frame.getContentPane().add(world);
+		frame.revalidate();
+	}
+	
+	public static void restartLevel() {
+		setupLevel(loadLevel(new ByteArrayInputStream(lastLevel.getBytes())));
+	}
+	
 	public static void main(String[] args) {
 		try {
 			frame = new JFrame("Bouncy Ball");
-			world = loadLevel(new FileInputStream(args[0]));
-			frame.setTitle(world.getName(true));
-			frame.addKeyListener(world);
-			frame.add(world);
+			setupLevel(loadLevel(new FileInputStream(args[0])));
 			frame.setSize(600, 400);
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

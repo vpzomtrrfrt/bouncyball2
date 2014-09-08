@@ -1,4 +1,5 @@
 package net.reederhome.colin.bouncyball;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,10 +21,26 @@ public class BBWorld extends JComponent implements KeyListener {
 		this.time=time;
 	}
 	
+	public boolean isStarted() {
+		return going || win>-1 || time<-1;
+	}
+	
 	public void paintComponent(Graphics g) {
 		g.clearRect(0, 0, getWidth(), getHeight());
 		for(int i = 0; i < obj.size(); i++) {
 			obj.get(i).draw(g);
+		}
+		if(time>=0) {
+			g.setColor(Color.red);
+			g.drawString("Time: "+time, 100, 10);
+		}
+		else if(time<-1) {
+			g.setColor(new Color(255, 255, 255, 127));
+			g.fillRect(0, 0, getWidth(), getHeight());
+			g.setColor(Color.red);
+			String txt = "TIME'S UP!";
+			g.setFont(g.getFont().deriveFont(96f));
+			g.drawString(txt, getWidth()/2-g.getFontMetrics().stringWidth(txt)/2, getHeight()/2);
 		}
 	}
 	
@@ -62,8 +79,17 @@ public class BBWorld extends JComponent implements KeyListener {
 		}
 		if(win>-1) {
 			win++;
-			if(win>=10) {
+			if(win>=20) {
 				BouncyBall.nextLevel();
+			}
+		}
+		if(going||time<=0) {
+			time--;
+			if(time<=0) {
+				going=false;
+				if(time<=-40) {
+					BouncyBall.restartLevel();
+				}
 			}
 		}
 	}
