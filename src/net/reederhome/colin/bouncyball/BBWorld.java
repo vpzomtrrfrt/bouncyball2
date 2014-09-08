@@ -17,6 +17,8 @@ public class BBWorld extends JComponent implements KeyListener, MouseMotionListe
 	private String levelName = "";
 	int time = -1;
 	ArrayList<BBObject> obj = new ArrayList<BBObject>();
+
+	int lastballnum = -1;
 	
 	public BBWorld(String name, int time) {
 		levelName=name;
@@ -100,6 +102,7 @@ public class BBWorld extends JComponent implements KeyListener, MouseMotionListe
 		if(no!=null) {
 			no.worldObj=this;
 			obj.add(no);
+			no.addToWorld();
 		}
 	}
 
@@ -108,6 +111,9 @@ public class BBWorld extends JComponent implements KeyListener, MouseMotionListe
 		if(BouncyBall.world!=this) return;
 		if(arg0.getKeyCode()==KeyEvent.VK_ENTER) {
 			going = true;
+		}
+		if(arg0.getKeyCode()==KeyEvent.VK_R) {
+			BouncyBall.restartLevel();
 		}
 		for(int i = 0; i < obj.size(); i++) {
 			if(obj.get(i) instanceof KeyListener) {
