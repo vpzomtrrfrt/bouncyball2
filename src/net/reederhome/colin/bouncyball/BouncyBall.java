@@ -1,9 +1,18 @@
 package net.reederhome.colin.bouncyball;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 @SuppressWarnings("rawtypes")
 public class BouncyBall {
 
@@ -11,6 +20,8 @@ public class BouncyBall {
 	public static JFrame frame;
 	public static BBWorld world = null;
 	public static String[] lastArgs;
+	public static URL[] levelFiles = null;
+	public static int currentLevel = -1;
 	private static HashMap<String,Class> classMapping;
 	public static HashMap<String,Class> getClassMap() {
 		if(classMapping==null) {
@@ -57,7 +68,6 @@ public class BouncyBall {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(lastLevel);
 		return tr;
 	}
 	
@@ -77,7 +87,25 @@ public class BouncyBall {
 	public static void main(String[] args) {
 		try {
 			frame = new JFrame("Bouncy Ball");
-			setupLevel(loadLevel(new FileInputStream(args[0])));
+			if(args[0].indexOf(".bbl")>-1) {
+				setupLevel(loadLevel(new FileInputStream(args[0])));				
+			}
+			else {
+				File infofile = new File(args[0]);
+				if(infofile.isDirectory()) {
+					infofile = new File(infofile.getAbsoluteFile()+"/info");
+				}
+				ArrayList<URL> fal = new ArrayList<URL>();
+				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(infofile)));
+				String line;
+				while((line=br.readLine()) != null) {
+					fal.add(new File(infofile.getParent()+"/"+line+".bbl").toURI().toURL());
+				}
+				levelFiles = new URL[fal.size()];
+				levelFiles = fal.toArray(levelFiles);
+				br.close();
+				nextLevel();
+			}
 			frame.setSize(600, 400);
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,10 +113,25 @@ public class BouncyBall {
 			t.start();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	public static void nextLevel() {
-		System.exit(0);
+		currentLevel++;
+		if(levelFiles!=null&&currentLevel<levelFiles.length) {
+			try {
+				setupLevel(loadLevel(levelFiles[currentLevel].openStream()));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				nextLevel();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			System.exit(0);
+		}
 	}
 }

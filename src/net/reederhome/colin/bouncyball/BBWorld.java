@@ -22,7 +22,7 @@ public class BBWorld extends JComponent implements KeyListener {
 	}
 	
 	public boolean isStarted() {
-		return going || win>-1 || time<-1;
+		return going || win>-1 || (time<=-1 && time!=-42);
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -34,7 +34,7 @@ public class BBWorld extends JComponent implements KeyListener {
 			g.setColor(Color.red);
 			g.drawString("Time: "+time, 100, 10);
 		}
-		else if(time<-1) {
+		else if(time!=-42) {
 			g.setColor(new Color(255, 255, 255, 127));
 			g.fillRect(0, 0, getWidth(), getHeight());
 			g.setColor(Color.red);
@@ -83,7 +83,7 @@ public class BBWorld extends JComponent implements KeyListener {
 				BouncyBall.nextLevel();
 			}
 		}
-		if(going||time<=0) {
+		if((going||time<=0)&&time!=-42) {
 			time--;
 			if(time<=0) {
 				going=false;
