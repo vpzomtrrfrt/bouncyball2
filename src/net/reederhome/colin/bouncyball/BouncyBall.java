@@ -31,6 +31,7 @@ public class BouncyBall {
 			classMapping.put("end", BBFinish.class);
 			classMapping.put("done", BBFinish.class);
 			classMapping.put("mouse", BBMouseBox.class);
+			classMapping.put("<--", BBPowerMover.class);
 		}
 		return classMapping;
 	}
