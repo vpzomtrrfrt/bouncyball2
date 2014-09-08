@@ -3,10 +3,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
-public class BBWorld extends JComponent implements KeyListener {
+public class BBWorld extends JComponent implements KeyListener, MouseMotionListener {
 
 	private static final long serialVersionUID = 5328167859301614764L;
 	
@@ -130,6 +132,26 @@ public class BBWorld extends JComponent implements KeyListener {
 		for(int i = 0; i < obj.size(); i++) {
 			if(obj.get(i) instanceof KeyListener) {
 				((KeyListener) obj.get(i)).keyTyped(arg0);
+			}
+		}
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		if(BouncyBall.world!=this) return;
+		for(int i = 0; i < obj.size(); i++) {
+			if(obj.get(i) instanceof MouseMotionListener) {
+				((MouseMotionListener) obj.get(i)).mouseDragged(arg0);
+			}
+		}
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		if(BouncyBall.world!=this) return;
+		for(int i = 0; i < obj.size(); i++) {
+			if(obj.get(i) instanceof MouseMotionListener) {
+				((MouseMotionListener) obj.get(i)).mouseMoved(arg0);
 			}
 		}
 	}

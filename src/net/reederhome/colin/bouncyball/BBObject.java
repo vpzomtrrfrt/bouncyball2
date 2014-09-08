@@ -8,8 +8,13 @@ public abstract class BBObject {
 	int x,y;
 	public BBObject() {
 		String[] args = BouncyBall.lastArgs;
-		x=Integer.parseInt(args[1]);
-		y=Integer.parseInt(args[2]);
+		if(args.length>2) {
+			x=Integer.parseInt(args[1]);
+			y=Integer.parseInt(args[2]);
+		}
+		else {
+			x=0;y=0;
+		}
 	}
 	public abstract void update();
 	public abstract void draw(Graphics g);

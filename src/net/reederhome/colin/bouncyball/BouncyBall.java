@@ -30,6 +30,7 @@ public class BouncyBall {
 			classMapping.put("woodblock", BBBox.class);
 			classMapping.put("end", BBFinish.class);
 			classMapping.put("done", BBFinish.class);
+			classMapping.put("mouse", BBMouseBox.class);
 		}
 		return classMapping;
 	}
@@ -75,6 +76,7 @@ public class BouncyBall {
 		world = w;
 		frame.setTitle(world.getName(true));
 		frame.addKeyListener(world);
+		frame.addMouseMotionListener(world);
 		frame.getContentPane().add(world);
 		frame.revalidate();
 	}
