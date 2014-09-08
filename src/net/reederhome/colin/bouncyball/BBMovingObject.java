@@ -23,7 +23,7 @@ public abstract class BBMovingObject extends BBObject {
 			yv=Math.abs(yv);
 		}
 	};
-	public void onCollision(BBObject t) {
+	public void onCollide(BBObject t) {
 		if(x<t.x) {
 			xv=-Math.abs(xv);
 		}
