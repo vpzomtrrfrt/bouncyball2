@@ -3,7 +3,6 @@ package net.reederhome.colin.bouncyball;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -98,15 +97,31 @@ public class BouncyBall {
 				setupLevel(loadLevel(url.openStream()));				
 			}
 			else {
-				File infofile = new File(args[0]);
-				if(infofile.isDirectory()) {
-					infofile = new File(infofile.getAbsoluteFile()+"/info");
+				URL infourl;
+				if(args[0].indexOf("://")==-1) {
+					File infofile = new File(args[0]);
+					if(infofile.isDirectory()) {
+						infofile = new File(infofile.getAbsoluteFile()+"/info");
+					}
+					infourl = infofile.toURI().toURL();
+				}
+				else {
+					infourl = new URL(args[0]);
 				}
 				ArrayList<URL> fal = new ArrayList<URL>();
-				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(infofile)));
+				BufferedReader br = new BufferedReader(new InputStreamReader(infourl.openStream()));
 				String line;
+				String rootpath = infourl.toString();
+				int i = rootpath.lastIndexOf("/");
+				System.out.println(rootpath);
+				if(i>-1) {
+					rootpath=rootpath.substring(0, i);
+				}
+				else {
+					rootpath=".";
+				}
 				while((line=br.readLine()) != null) {
-					fal.add(new File(infofile.getParent()+"/"+line+".bbl").toURI().toURL());
+					fal.add(new URL(rootpath+"/"+line+".bbl"));
 				}
 				levelFiles = new URL[fal.size()];
 				levelFiles = fal.toArray(levelFiles);
