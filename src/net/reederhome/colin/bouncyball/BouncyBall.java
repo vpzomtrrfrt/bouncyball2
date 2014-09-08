@@ -37,9 +37,10 @@ public class BouncyBall {
 		return null;
 	}
 	public static BBWorld loadLevel(InputStream is) {
-		BBWorld tr = new BBWorld();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		BBWorld tr = null;
 		try {
+			tr = new BBWorld(br.readLine(), Integer.parseInt(br.readLine()));
 			String line = null;
 			do {
 				if(line!=null) tr.addObject(loadLine(line));
@@ -54,6 +55,7 @@ public class BouncyBall {
 		try {
 			frame = new JFrame("Bouncy Ball");
 			world = loadLevel(new FileInputStream(args[0]));
+			frame.setTitle(world.getName(true));
 			frame.addKeyListener(world);
 			frame.add(world);
 			frame.setSize(600, 400);

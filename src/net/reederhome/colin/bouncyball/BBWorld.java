@@ -11,13 +11,38 @@ public class BBWorld extends JComponent implements KeyListener {
 	
 	boolean going = false;
 	int win = -1;
+	private String levelName = "";
+	int time = -1;
 	ArrayList<BBObject> obj = new ArrayList<BBObject>();
+	
+	public BBWorld(String name, int time) {
+		levelName=name;
+		this.time=time;
+	}
 	
 	public void paintComponent(Graphics g) {
 		g.clearRect(0, 0, getWidth(), getHeight());
 		for(int i = 0; i < obj.size(); i++) {
 			obj.get(i).draw(g);
 		}
+	}
+	
+	public String getName(boolean start) {
+		if(start) {
+			if(levelName=="") {
+				return "Bouncy Ball";
+			}
+			else {
+				return "Bouncy Ball: "+levelName;
+			}
+		}
+		else {
+			return levelName;
+		}
+	}
+	
+	public String getName() {
+		return getName(false);
 	}
 	
 	public void updateObjects() {
