@@ -12,7 +12,7 @@ public class BBMouseBox extends BBObject implements MouseMotionListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if(!worldObj.isStarted()) return;
+		if(worldObj.isStarted()) return;
 		this.x=e.getX();
 		this.y=e.getY();
 	}
