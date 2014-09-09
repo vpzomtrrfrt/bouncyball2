@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.swing.JFrame;
 @SuppressWarnings("rawtypes")
@@ -180,6 +181,19 @@ public class BouncyBall {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		else if(levelFiles!=null&&currentLevel==levelFiles.length) {
+			BBWorld winLevel = new BBWorld("", -42);
+			for(int i=0;i<24;i++) {
+				lastArgs=new String[]{"<box>", Integer.toString(new Random().nextInt(580)), Integer.toString(new Random().nextInt(380)), "20", "20", Integer.toString(new Random().nextInt(5)), Integer.toString(new Random().nextInt(5))};
+				BBMovingObject box = new BBMovingBox();
+				winLevel.addObject(box);
+			}
+			lastArgs=new String[]{"box", "200", "160", "200", "80", " You Won!", "32"};
+			BBObject winBox = new BBBox();
+			winLevel.addObject(winBox);
+			setupLevel(winLevel);
+			winLevel.going=true;
 		}
 		else {
 			System.exit(0);
