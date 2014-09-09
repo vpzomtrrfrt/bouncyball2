@@ -21,6 +21,7 @@ public abstract class BBObject {
 	public abstract int width();
 	public abstract int height();
 	public String noCollision() {return "";}
+	public String noCollision(BBObject thing) {return noCollision();}
 	public void onCollide(BBObject thing) {}
 	public void addToWorld() {}
 }

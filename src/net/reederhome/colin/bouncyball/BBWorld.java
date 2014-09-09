@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import javax.swing.JComponent;
 public class BBWorld extends JComponent implements KeyListener, MouseMotionListener {
@@ -17,6 +18,7 @@ public class BBWorld extends JComponent implements KeyListener, MouseMotionListe
 	private String levelName = "";
 	int time = -1;
 	ArrayList<BBObject> obj = new ArrayList<BBObject>();
+	Stack<BBObject> doomed = new Stack<BBObject>();
 
 	int lastballnum = -1;
 	
@@ -70,9 +72,9 @@ public class BBWorld extends JComponent implements KeyListener, MouseMotionListe
 		for(int i = 0; i < obj.size(); i++) {
 			obj.get(i).update();
 			if(going) {
-				if(!obj.get(i).noCollision().contains("me")) {
-					for(int i2 = 0; i2 < obj.size(); i2++) {
-						if(!obj.get(i2).noCollision().contains("you")&&!(i2==i)) {
+				for(int i2 = 0; i2 < obj.size(); i2++) {
+					if(!obj.get(i).noCollision(obj.get(i2)).contains("me")) {
+						if(!obj.get(i2).noCollision(obj.get(i)).contains("you")&&!(i2==i)) {
 							if(obj.get(i).x<obj.get(i2).x+obj.get(i2).width()&&obj.get(i).x+obj.get(i).width()>obj.get(i2).x&&obj.get(i).y<obj.get(i2).y+obj.get(i2).height()&&obj.get(i).y+obj.get(i).height()>obj.get(i2).y) {
 								obj.get(i).onCollide(obj.get(i2));
 							}
@@ -95,6 +97,9 @@ public class BBWorld extends JComponent implements KeyListener, MouseMotionListe
 					BouncyBall.restartLevel();
 				}
 			}
+		}
+		while(doomed.size()>0) {
+			obj.remove(doomed.pop());
 		}
 	}
 

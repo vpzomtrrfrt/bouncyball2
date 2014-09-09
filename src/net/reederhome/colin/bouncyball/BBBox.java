@@ -30,7 +30,7 @@ public class BBBox extends BBObject {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.black);
-		g.fill3DRect(x, y, width(), height(), true);
+		g.fill3DRect(x, y, boxWidth, boxHeight, true);
 		g.translate(x, y);
 		l.paint(g);
 		g.translate(-x, -y);

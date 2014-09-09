@@ -33,6 +33,8 @@ public class BouncyBall {
 			classMapping.put("mouse", BBMouseBox.class);
 			classMapping.put("<--", BBPowerMover.class);
 			classMapping.put("<box>", BBMovingBox.class);
+			classMapping.put("bzzt", BBElectricFence.class);
+			classMapping.put("key", BBKey.class);
 		}
 		return classMapping;
 	}
