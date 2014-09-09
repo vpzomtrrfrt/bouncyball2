@@ -37,7 +37,29 @@ public class BouncyBall {
 		return classMapping;
 	}
 	public static BBObject loadLine(String l) {
-		String[] args = l.split(" ");
+		ArrayList<String> ala = new ArrayList<String>();
+		String cura = "";
+		boolean quote = false;
+		for(int i = 0; i < l.length(); i++) {
+			char c = l.charAt(i);
+			if(c=='"') {
+				quote=!quote;
+			}
+			else if(c==' '&&!quote) {
+				if(cura.length()>0) {
+					ala.add(cura);
+					cura="";
+				}
+			}
+			else {
+				cura+=c;
+			}
+		}
+		if(cura.length()>0) {
+			ala.add(cura);
+		}
+		String[] args = new String[]{};
+		args=ala.toArray(args);
 		HashMap<String,Class> map = getClassMap();
 		if(map.containsKey(args[0])) {
 			lastArgs=args;
@@ -88,6 +110,7 @@ public class BouncyBall {
 	}
 	
 	public static void main(String[] args) {
+		System.setProperty("http.agent", "net.reederhome.colin.bouncyball");
 		try {
 			frame = new JFrame("Bouncy Ball");
 			if(args[0].indexOf(".bbl")>-1) {
@@ -98,7 +121,7 @@ public class BouncyBall {
 				else {
 					url = new File(args[0]).toURI().toURL();
 				}
-				setupLevel(loadLevel(url.openStream()));				
+				setupLevel(loadLevel(url.openStream()));
 			}
 			else {
 				URL infourl;
@@ -125,7 +148,7 @@ public class BouncyBall {
 					rootpath=".";
 				}
 				while((line=br.readLine()) != null) {
-					fal.add(new URL(rootpath+"/"+line+".bbl"));
+					fal.add(new URL(rootpath+"/"+line+(line.indexOf(".bbl")>-1?"":".bbl")));
 				}
 				levelFiles = new URL[fal.size()];
 				levelFiles = fal.toArray(levelFiles);
