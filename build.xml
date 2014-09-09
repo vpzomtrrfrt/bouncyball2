@@ -1,0 +1,35 @@
+<project name="BouncyBall" default="dist" basedir=".">
+	<property name="src" location="src"/>
+	<property name="build" location="build"/>
+	<property name="dist" location="dist"/>
+	<available file=".git" type="dir" property="git.present"/>
+
+	<target name="git.revision" description="Store git revision in ${repository.version}" if="git.present">
+	    <exec executable="git" outputproperty="git.revision" failifexecutionfails="false" errorproperty="">
+        	<arg value="describe"/>
+	        <arg value="--tags"/>
+        	<arg value="--always"/>
+	        <arg value="HEAD"/>
+	    </exec>
+	    <condition property="repository.version" value="${git.revision}" else="unknown">
+        	<and>
+	            <isset property="git.revision"/>
+        	    <length string="${git.revision}" trim="yes" length="0" when="greater"/>
+	        </and>
+	    </condition>
+	</target>
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}"/>
+	</target>
+	<target name="dist" depends="compile,git.revision">
+		<mkdir dir="${dist}/lib"/>
+		<jar jarfile="${dist}/lib/BouncyBall-${repository.version}.jar" basedir="${build}"/>
+	</target>
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+</project>
