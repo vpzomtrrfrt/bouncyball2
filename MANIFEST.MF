@@ -1,0 +1,3 @@
+Main-Class: net.reederhome.colin.bouncyball.BouncyBall
+Application-Name: Bouncy Ball
+Permissions: sandbox

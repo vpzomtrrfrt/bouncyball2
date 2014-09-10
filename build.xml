@@ -26,7 +26,7 @@
 	</target>
 	<target name="dist" depends="compile,git.revision">
 		<mkdir dir="${dist}/lib"/>
-		<jar jarfile="${dist}/lib/BouncyBall-${repository.version}.jar" basedir="${build}"/>
+		<jar jarfile="${dist}/lib/BouncyBall-${repository.version}.jar" basedir="${build}" manifest="MANIFEST.MF"/>
 	</target>
 	<target name="clean">
 		<delete dir="${build}"/>
