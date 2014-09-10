@@ -109,7 +109,13 @@ public class BouncyBall {
 	}
 	
 	public static void restartLevel() {
-		setupLevel(loadLevel(new ByteArrayInputStream(lastLevel.getBytes())));
+		if(levelFiles!=null) {
+			currentLevel--;
+			nextLevel();
+		}
+		else {
+			setupLevel(loadLevel(new ByteArrayInputStream(lastLevel.getBytes())));
+		}
 	}
 	
 	public static void main(String[] args) {
