@@ -113,6 +113,10 @@ public class BouncyBall {
 	}
 	
 	public static void main(String[] args) {
+		if(args.length==0) {
+			main(new String[]{"http://reederhome.net/colin/bouncyball/bb2levels/info"});
+			return;
+		}
 		System.setProperty("http.agent", "net.reederhome.colin.bouncyball");
 		try {
 			frame = new JFrame("Bouncy Ball");

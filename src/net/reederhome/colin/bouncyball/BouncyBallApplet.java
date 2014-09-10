@@ -15,6 +15,6 @@ public class BouncyBallApplet extends JApplet implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		BouncyBall.main(new String[]{"http://reederhome.net/colin/bouncyball/bb2levels/info"});
+		BouncyBall.main(new String[]{});
 	}
 }
