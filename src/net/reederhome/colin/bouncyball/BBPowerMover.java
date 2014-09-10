@@ -27,8 +27,9 @@ public class BBPowerMover extends BBObject {
 	@Override
 	public void onCollide(BBObject thing) {
 		if(thing instanceof BBMovingObject) {
-			((BBMovingObject) thing).xv=-5;
-			((BBMovingObject) thing).yv=0;
+			BBMovingObject mo = (BBMovingObject) thing;
+			mo.xv=-Math.min(Math.sqrt(mo.xv*mo.xv+mo.yv*mo.yv), 5.0);
+			mo.yv=0;
 		}
 	}
 

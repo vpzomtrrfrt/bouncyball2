@@ -2,7 +2,8 @@ package net.reederhome.colin.bouncyball;
 
 public abstract class BBMovingObject extends BBObject {
 
-	int xv,yv;
+	double xv;
+	double yv;
 	public void update(){if(worldObj.going)move();}
 	public void move() {
 		x+=xv;y+=yv;

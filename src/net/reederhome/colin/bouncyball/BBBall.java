@@ -25,7 +25,10 @@ public class BBBall extends BBMovingObject implements KeyListener {
 	public void draw(Graphics g) {
 		if(!worldObj.isStarted()) {
 			g.setColor(Color.black);
-			g.drawLine(x+width()/2, y+height()/2, x+width()/2+xv*width(), y+height()/2+yv*height());
+			for(int i = 0; i < 20; i++) {
+				g.drawLine((int)(x+width()/2+xv*(i)), (int)(y+height()/2+yv*(i)), (int)(x+width()/2+xv*(i+0.5)), (int)(y+height()/2+yv*(i+0.5)));
+			}
+			//g.drawLine(x+width()/2, y+height()/2, x+width()/2+xv*width(), y+height()/2+yv*height());
 		}
 		g.setColor(ballcolor[ballnum]);
 		g.fillOval(x, y, width(), height());
