@@ -29,13 +29,15 @@
 		<property name="bb.jarfile" value="${dist}/lib/BouncyBall-${repository.version}.jar"/>
 		<jar jarfile="${bb.jarfile}" basedir="${build}" manifest="MANIFEST.MF"/>
 	</target>
-	<taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask" classpath="3rdParty/appbundler-1.0.jar"/>
-	<target name="binary" depends="dist">
+	<target name="binary-linux" depends="dist">
 		<concat destfile="${dist}/bin/bouncyball" binary="yes">
 			<fileset file="stub.sh" />
 			<fileset file="${bb.jarfile}" />
 		</concat>
 		<chmod file="${dist}/bin/bouncyball" perm="+x" />
+	</target>
+	<target name="binary-mac" depends="dist">
+		<taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask" classpath="3rdParty/appbundler-1.0.jar"/>
 		<bundleapp outputdirectory="${dist}/bin" name="BouncyBall" displayname="Bouncy Ball" identifier="net.reederhome.colin.bouncyball.BouncyBall" mainclassname="net.reederhome.colin.bouncyball.BouncyBall"><classpath file="${bb.jarfile}"/></bundleapp>
 	</target>
 	<target name="clean">
