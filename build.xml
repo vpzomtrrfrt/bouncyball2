@@ -30,6 +30,7 @@
 		<jar jarfile="${bb.jarfile}" basedir="${build}" manifest="MANIFEST.MF"/>
 	</target>
 	<target name="binary-linux" depends="dist">
+		<mkdir dir="${dist}/bin"/>
 		<concat destfile="${dist}/bin/bouncyball" binary="yes">
 			<fileset file="stub.sh" />
 			<fileset file="${bb.jarfile}" />
@@ -37,6 +38,7 @@
 		<chmod file="${dist}/bin/bouncyball" perm="+x" />
 	</target>
 	<target name="binary-mac" depends="dist">
+		<mkdir dir="${dist}/bin"/>
 		<taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask" classpath="3rdParty/appbundler-1.0.jar"/>
 		<bundleapp outputdirectory="${dist}/bin" name="BouncyBall" displayname="Bouncy Ball" identifier="net.reederhome.colin.bouncyball.BouncyBall" mainclassname="net.reederhome.colin.bouncyball.BouncyBall"><classpath file="${bb.jarfile}"/></bundleapp>
 	</target>
