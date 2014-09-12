@@ -21,6 +21,8 @@ public class BBWorld extends JComponent implements KeyListener, MouseMotionListe
 	Stack<BBObject> doomed = new Stack<BBObject>();
 
 	int lastballnum = -1;
+
+	public double gravity = 0;
 	
 	public BBWorld(String name, int time) {
 		levelName=name;

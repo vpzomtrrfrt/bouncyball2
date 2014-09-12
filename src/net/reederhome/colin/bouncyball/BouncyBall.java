@@ -36,6 +36,7 @@ public class BouncyBall {
 			classMapping.put("<box>", BBMovingBox.class);
 			classMapping.put("bzzt", BBElectricFence.class);
 			classMapping.put("key", BBKey.class);
+			classMapping.put("button", BBButton.class);
 		}
 		return classMapping;
 	}

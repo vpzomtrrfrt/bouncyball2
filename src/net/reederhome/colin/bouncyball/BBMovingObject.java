@@ -6,6 +6,7 @@ public abstract class BBMovingObject extends BBObject {
 	double yv;
 	public void update(){if(worldObj.going)move();}
 	public void move() {
+		yv+=worldObj.gravity;
 		x+=xv;y+=yv;
 		if(x+width()>=worldObj.getWidth()) {
 			x=worldObj.getWidth()-width();
